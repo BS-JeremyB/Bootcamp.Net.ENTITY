@@ -64,12 +64,16 @@ while (continuer)
 
                 Game game = new Game
                 {
-                    Title = "Rocket League",
+                    Title = "Rocket League5",
                     Description = "Du foot avec des voitures",
                     IsNew = true,
                     ReleaseDate = new DateTime(2015, 07, 07),
                     PEGI = 3,
-                    Price = 1
+                    Price = 1,
+                    GameDetails = new GameDetails
+                    {
+                        FileSize = 100,
+                    }
                 };
 
                 dc.Add(game);
@@ -77,12 +81,13 @@ while (continuer)
 
                 if(game.Id > 0)
                 {
-                    Console.WriteLine($"Le jeu à bien été créé à l'Id : {game.Id}");
+                    Console.WriteLine($"Le jeu à bien été créé à l'Id : {game.Id} et l'id du détail est {game.GameDetails.Id}");
                 }
                 else
                 {
                     Console.WriteLine("Le jeu n'a pas été créé");
                 }
+                Console.ReadLine ();
 
             }
             break;

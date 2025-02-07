@@ -4,6 +4,7 @@ using Bootcamp.Net.ENTITY.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bootcamp.Net.ENTITY.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250207135505_one-to-one")]
+    partial class onetoone
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,13 +91,11 @@ namespace Bootcamp.Net.ENTITY.Migrations
 
             modelBuilder.Entity("Bootcamp.Net.ENTITY.Entities.GameDetails", b =>
                 {
-                    b.HasOne("Bootcamp.Net.ENTITY.Entities.Game", "Game")
+                    b.HasOne("Bootcamp.Net.ENTITY.Entities.Game", null)
                         .WithOne("GameDetails")
                         .HasForeignKey("Bootcamp.Net.ENTITY.Entities.GameDetails", "GameId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Game");
                 });
 
             modelBuilder.Entity("Bootcamp.Net.ENTITY.Entities.Game", b =>
