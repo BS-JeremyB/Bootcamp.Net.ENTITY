@@ -18,7 +18,6 @@ namespace Bootcamp.Net.ENTITY.Entities
         public bool IsNew { get; set; }
         public int PEGI { get; set; }
 
-        public GameDetails GameDetails { get; set; }
 
 
         // Ajout studio ici

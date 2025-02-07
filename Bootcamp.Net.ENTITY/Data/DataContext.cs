@@ -13,6 +13,7 @@ namespace Bootcamp.Net.ENTITY.Data
     public class DataContext : DbContext
     {
         public DbSet<Game> Games { get; set; }
+        public DbSet<GameDetails> GameDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

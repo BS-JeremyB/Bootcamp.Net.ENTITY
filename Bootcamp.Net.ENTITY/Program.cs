@@ -64,24 +64,31 @@ while (continuer)
 
                 Game game = new Game
                 {
-                    Title = "Rocket League5",
+                    Title = "Rocket League7",
                     Description = "Du foot avec des voitures",
                     IsNew = true,
                     ReleaseDate = new DateTime(2015, 07, 07),
                     PEGI = 3,
                     Price = 1,
-                    GameDetails = new GameDetails
-                    {
-                        FileSize = 100,
-                    }
+
                 };
+
+                GameDetails gameDetails = new GameDetails
+                {
+                    FileSize = 100,
+                };
+
 
                 dc.Add(game);
                 dc.SaveChanges();
 
+                dc.Entry(gameDetails).Property("GameId").CurrentValue = game.Id;
+                dc.GameDetails.Add(gameDetails);
+                dc.SaveChanges();
+
                 if(game.Id > 0)
                 {
-                    Console.WriteLine($"Le jeu à bien été créé à l'Id : {game.Id} et l'id du détail est {game.GameDetails.Id}");
+                    Console.WriteLine($"Le jeu à bien été créé à l'Id : {game.Id} et l'id du détail est {gameDetails.Id} ");
                 }
                 else
                 {

@@ -9,9 +9,7 @@ namespace Bootcamp.Net.ENTITY.Entities
     public class GameDetails
     {
         public int Id { get; set; }
-        public int GameId { get; set; }
         public int FileSize { get; set; }
 
-        public Game Game { get; set; }
     }
 }
