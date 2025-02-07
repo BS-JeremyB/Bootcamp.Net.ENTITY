@@ -16,5 +16,10 @@ namespace Bootcamp.Net.ENTITY.Exo.Entities
         public string Realisateur { get; set; }
         public string ActeurPrincipal { get; set; }
         public string Genre { get; set; }
+
+        public override string ToString()
+        {
+            return $"Le film {Titre} Réalise en {AnneeSortie} par {Realisateur} est un film de type {Genre} avec comme casting principal {ActeurPrincipal}";
+        }
     }
 }

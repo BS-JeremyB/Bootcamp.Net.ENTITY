@@ -12,11 +12,12 @@ namespace Bootcamp.Net.ENTITY.Exo.Data
     public class DataContext : DbContext
     {
 
-        DbSet<Film> Films { get; set; }
+        public DbSet<Film> Films { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new FilmConfig());
+            modelBuilder.ApplyConfiguration(new DataSet());
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
