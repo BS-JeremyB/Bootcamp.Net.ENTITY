@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bootcamp.Net.ENTITY.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250207141251_one-to-one-fluent")]
-    partial class onetoonefluent
+    [Migration("20250207155151_many-to-many")]
+    partial class manytomany
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,11 +48,16 @@ namespace Bootcamp.Net.ENTITY.Migrations
                     b.Property<DateTime?>("ReleaseDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("StudioId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StudioId");
 
                     b.HasIndex("Title")
                         .IsUnique();
@@ -89,6 +94,66 @@ namespace Bootcamp.Net.ENTITY.Migrations
                     b.ToTable("GameDetails");
                 });
 
+            modelBuilder.Entity("Bootcamp.Net.ENTITY.Entities.GamePlatform", b =>
+                {
+                    b.Property<int>("PlatformId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PlatformId", "GameId");
+
+                    b.HasIndex("GameId");
+
+                    b.ToTable("GamePlatform");
+                });
+
+            modelBuilder.Entity("Bootcamp.Net.ENTITY.Entities.Platform", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Platforms");
+                });
+
+            modelBuilder.Entity("Bootcamp.Net.ENTITY.Entities.Studio", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Studios");
+                });
+
+            modelBuilder.Entity("Bootcamp.Net.ENTITY.Entities.Game", b =>
+                {
+                    b.HasOne("Bootcamp.Net.ENTITY.Entities.Studio", "Studio")
+                        .WithMany("Games")
+                        .HasForeignKey("StudioId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Studio");
+                });
+
             modelBuilder.Entity("Bootcamp.Net.ENTITY.Entities.GameDetails", b =>
                 {
                     b.HasOne("Bootcamp.Net.ENTITY.Entities.Game", "Game")
@@ -100,10 +165,41 @@ namespace Bootcamp.Net.ENTITY.Migrations
                     b.Navigation("Game");
                 });
 
+            modelBuilder.Entity("Bootcamp.Net.ENTITY.Entities.GamePlatform", b =>
+                {
+                    b.HasOne("Bootcamp.Net.ENTITY.Entities.Game", "Game")
+                        .WithMany("Platforms")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Bootcamp.Net.ENTITY.Entities.Platform", "Platform")
+                        .WithMany("GamesPlateform")
+                        .HasForeignKey("PlatformId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+
+                    b.Navigation("Platform");
+                });
+
             modelBuilder.Entity("Bootcamp.Net.ENTITY.Entities.Game", b =>
                 {
                     b.Navigation("GameDetails")
                         .IsRequired();
+
+                    b.Navigation("Platforms");
+                });
+
+            modelBuilder.Entity("Bootcamp.Net.ENTITY.Entities.Platform", b =>
+                {
+                    b.Navigation("GamesPlateform");
+                });
+
+            modelBuilder.Entity("Bootcamp.Net.ENTITY.Entities.Studio", b =>
+                {
+                    b.Navigation("Games");
                 });
 #pragma warning restore 612, 618
         }

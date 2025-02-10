@@ -14,12 +14,10 @@ namespace Bootcamp.Net.ENTITY.Data.Config
         public void Configure(EntityTypeBuilder<GameDetails> builder)
         {
 
-            builder.HasOne<Game>()
-                   .WithOne()
-                   .HasForeignKey<GameDetails>("GameId")
+            builder.HasOne(d => d.Game)
+                   .WithOne(g => g.GameDetails)
+                   .HasForeignKey<GameDetails>(d => d.GameId)
                    .OnDelete(DeleteBehavior.NoAction);
-
-            builder.Property<int>("GameId").HasColumnName("GameId");
         }
     }
 }

@@ -17,8 +17,13 @@ namespace Bootcamp.Net.ENTITY.Entities
         public decimal? Price { get; set; }
         public bool IsNew { get; set; }
         public int PEGI { get; set; }
+        public int StudioId { get; set; }
 
 
+        public GameDetails GameDetails { get; set; }
+        public Studio Studio { get; set; }
+
+        public ICollection<GamePlatform> Platforms { get; set; }
 
         // Ajout studio ici
     }

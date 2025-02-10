@@ -13,12 +13,16 @@ namespace Bootcamp.Net.ENTITY.Data
     public class DataContext : DbContext
     {
         public DbSet<Game> Games { get; set; }
-        public DbSet<GameDetails> GameDetails { get; set; }
+        public DbSet<Studio> Studios { get; set; }
+        public DbSet<Platform> Platforms { get; set; }
+
+        public DbSet<GamePlatform> GamePlatform {  get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new GamesConfig());
             modelBuilder.ApplyConfiguration(new GameDetailsConfig());
+            modelBuilder.ApplyConfiguration(new GamePlatformConfig());
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

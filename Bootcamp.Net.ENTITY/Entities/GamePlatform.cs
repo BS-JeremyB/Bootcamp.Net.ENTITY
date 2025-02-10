@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Bootcamp.Net.ENTITY.Entities
 {
-    public class GameDetails
+    public class GamePlatform
     {
-        public int Id { get; set; }
         public int GameId { get; set; }
-        public int FileSize { get; set; }
-
         public Game Game { get; set; }
+        public int PlatformId { get; set; }
+        public Platform Platform { get; set; }
     }
 }

@@ -21,6 +21,12 @@ namespace Bootcamp.Net.ENTITY.Data.Config
             builder.ToTable(g => g.HasCheckConstraint("ReleaseDate", "ReleaseDate > '1958-10-18'"));
             builder.HasIndex(g => g.Title).IsUnique();
 
+
+            builder.HasOne(g => g.Studio)
+                   .WithMany(s => s.Games)
+                   .HasForeignKey(g => g.StudioId)
+                   .OnDelete(DeleteBehavior.NoAction);
+
        //     builder.HasData(
        //    new Game { Id = 7, Title = "The Legend of Zelda", ReleaseDate = DateTime.Parse("1986-02-21"), Description = "Premier jeu de la série Zelda.", Price = 49.99m, IsNew = false, PEGI = 7 },
        //    new Game { Id = 8, Title = "Super Mario Bros.", ReleaseDate = DateTime.Parse("1985-09-13"), Description = "Jeu de plateforme révolutionnaire.", Price = 39.99m, IsNew = false, PEGI = 3 },
