@@ -69,23 +69,56 @@ using Microsoft.EntityFrameworkCore;
 #endregion
 
 #region Supprimer des films
-using (DataContext dc = new DataContext())
+//using (DataContext dc = new DataContext())
+//{
+//    IEnumerable<Film> films = dc.Films.Where(f => f.ActeurPrincipal.Contains("Hunnam"));
+
+//    dc.RemoveRange(films);
+
+//    //foreach(Film film in films)
+//    //{
+//    //    dc.Remove(film);
+//    //}
+
+//    try
+//    {
+//        dc.SaveChanges();
+//    }catch(DbUpdateException ex)
+//    {
+//        Console.WriteLine(ex.Message);
+//    }
+//}
+#endregion
+
+
+#region Relations
+
+
+using(DataContext dc = new DataContext())
 {
-    IEnumerable<Film> films = dc.Films.Where(f => f.ActeurPrincipal.Contains("Hunnam"));
 
-    dc.RemoveRange(films);
+    var films = dc.Films.Include(f => f.Acteurs)
+                        .ThenInclude(fp => fp.Personne)
+                        .Include(f => f.Realisateur)
+                        .ToList();
 
-    //foreach(Film film in films)
-    //{
-    //    dc.Remove(film);
-    //}
-
-    try
+    foreach (Film film in films)
     {
-        dc.SaveChanges();
-    }catch(DbUpdateException ex)
-    {
-        Console.WriteLine(ex.Message);
+        Console.WriteLine($"Titre : {film.Titre}");
+        Console.WriteLine($"Année de Sortie : {film.AnneeSortie}");
+        Console.WriteLine($"Réalisé par : {film.Realisateur.Prenom} {film.Realisateur.Nom}");
+        Console.WriteLine("Casting : ");
+        foreach(FilmPersonne acteur in film.Acteurs)
+        {
+            Console.WriteLine($"   - {acteur.Personne.Prenom} {acteur.Personne.Nom}");
+        }
+
+        Console.WriteLine();
+        Console.WriteLine("-----------------------------------");
+        Console.WriteLine();
     }
+
+    Console.ReadLine();
 }
-#endregion 
+
+#endregion

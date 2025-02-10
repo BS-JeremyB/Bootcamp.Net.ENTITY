@@ -1,4 +1,5 @@
 ﻿using Bootcamp.Net.ENTITY.Exo.Data.Config;
+using Bootcamp.Net.ENTITY.Exo.Data.DataSet;
 using Bootcamp.Net.ENTITY.Exo.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,11 +14,18 @@ namespace Bootcamp.Net.ENTITY.Exo.Data
     {
 
         public DbSet<Film> Films { get; set; }
+        public DbSet<Personne> Personnes { get; set; }
+        public DbSet<FilmPersonne> FilmPersonnes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new FilmConfig());
-            modelBuilder.ApplyConfiguration(new DataSet());
+            modelBuilder.ApplyConfiguration(new FilmPersonneConfig());
+
+            modelBuilder.ApplyConfiguration(new FilmData());
+            modelBuilder.ApplyConfiguration(new PersonneData());
+            modelBuilder.ApplyConfiguration(new FilmPersonneData());
+            
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

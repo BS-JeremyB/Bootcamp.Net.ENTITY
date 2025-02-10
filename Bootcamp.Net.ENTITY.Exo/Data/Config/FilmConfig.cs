@@ -24,19 +24,9 @@ namespace Bootcamp.Net.ENTITY.Exo.Data.Config
                 .HasMaxLength(100);
             builder.HasIndex(f => f.Titre).IsUnique();
 
-            // Realisateur : Contraintes requis, taille
-            builder.Property(f => f.Realisateur)
-                .IsRequired()
-                .HasMaxLength(100);
-
             // AnneeSortie : Contraintes requis
             builder.Property(f => f.AnneeSortie)
                 .IsRequired();
-
-            // ActeurPrincipal : Contraintes requis, taille
-            builder.Property(f => f.ActeurPrincipal)
-                .IsRequired()
-                .HasMaxLength(100);
 
             // Genre : Contraintes requis, taille
             builder.Property(f => f.Genre)
@@ -45,6 +35,12 @@ namespace Bootcamp.Net.ENTITY.Exo.Data.Config
 
             // AnneeSortie : Contraintes de check
             builder.ToTable(f => f.HasCheckConstraint("AnneeSortie", "AnneeSortie > 1975"));
+
+
+            builder.HasOne<Personne>(f => f.Realisateur)
+                   .WithMany(p => p.FilmReal)
+                   .HasForeignKey(f => f.RealisateurId)
+                   .OnDelete(DeleteBehavior.Restrict);
 
 
         }

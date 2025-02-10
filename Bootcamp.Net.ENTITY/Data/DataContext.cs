@@ -23,6 +23,7 @@ namespace Bootcamp.Net.ENTITY.Data
             modelBuilder.ApplyConfiguration(new GamesConfig());
             modelBuilder.ApplyConfiguration(new GameDetailsConfig());
             modelBuilder.ApplyConfiguration(new GamePlatformConfig());
+
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
